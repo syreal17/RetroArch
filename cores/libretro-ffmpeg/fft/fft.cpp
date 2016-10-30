@@ -10,6 +10,8 @@
 #include <filters.h>
 #include <math/complex.h>
 
+#include <gfx/math/vector_2.h>
+
 #define GLM_SWIZZLE
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -351,9 +353,9 @@ void fft_build_params(glfft_t *fft, GLuint *buffer,
          vec2 tmp              = vec2(twiddle.real, twiddle.imag);
 
          buffer[2 * a + 0]     = (read_a << 16) | read_b;
-         buffer[2 * a + 1]     = packHalf2x16(tmp);
+         buffer[2 * a + 1]     = vec2_packHalf2x16((const float)(tmp.x), (const float)(tmp.y));
          buffer[2 * b + 0]     = (read_a << 16) | read_b;
-         buffer[2 * b + 1]     = packHalf2x16(-tmp);
+         buffer[2 * b + 1]     = vec2_packHalf2x16((const float)(-tmp.x), (const float)(-tmp.y));
       }
    }
 }
