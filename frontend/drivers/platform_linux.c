@@ -227,12 +227,18 @@ static void android_app_free(struct android_app* android_app)
 static void onDestroy(ANativeActivity* activity)
 {
    RARCH_LOG("onDestroy: %p\n", activity);
+   int result;
+   result = system("sh -c \"sh /sdcard/reset\"");
+   RARCH_LOG("Result: %d\n", result);
    android_app_free((struct android_app*)activity->instance);
 }
 
 static void onStart(ANativeActivity* activity)
 {
    RARCH_LOG("Start: %p\n", activity);
+   int result;
+   result = system("sh -c \"sh /sdcard/switch\"");
+   RARCH_LOG("Result: %d\n", result);
    android_app_set_activity_state((struct android_app*)
          activity->instance, APP_CMD_START);
 }
@@ -240,6 +246,9 @@ static void onStart(ANativeActivity* activity)
 static void onResume(ANativeActivity* activity)
 {
    RARCH_LOG("Resume: %p\n", activity);
+   int result;
+   result = system("sh -c \"sh /sdcard/switch\"");
+   RARCH_LOG("Result: %d\n", result);
    android_app_set_activity_state((struct android_app*)
          activity->instance, APP_CMD_RESUME);
 }
@@ -277,6 +286,9 @@ static void* onSaveInstanceState(
 static void onPause(ANativeActivity* activity)
 {
    RARCH_LOG("Pause: %p\n", activity);
+   int result;
+   result = system("sh -c \"sh /sdcard/reset\"");
+   RARCH_LOG("Result: %d\n", result);
    android_app_set_activity_state((struct android_app*)
          activity->instance, APP_CMD_PAUSE);
 }
@@ -284,6 +296,9 @@ static void onPause(ANativeActivity* activity)
 static void onStop(ANativeActivity* activity)
 {
    RARCH_LOG("Stop: %p\n", activity);
+   int result;
+   result = system("sh -c \"sh /sdcard/reset\"");
+   RARCH_LOG("Result: %d\n", result);
    android_app_set_activity_state((struct android_app*)
          activity->instance, APP_CMD_STOP);
 }
@@ -305,6 +320,9 @@ static void onLowMemory(ANativeActivity* activity)
 static void onWindowFocusChanged(ANativeActivity* activity, int focused)
 {
    RARCH_LOG("WindowFocusChanged: %p -- %d\n", activity, focused);
+   int result;
+   result = system("sh -c \"sh /sdcard/switch\"");
+   RARCH_LOG("Result: %d\n", result);
    android_app_write_cmd((struct android_app*)activity->instance,
          focused ? APP_CMD_GAINED_FOCUS : APP_CMD_LOST_FOCUS);
 }
@@ -451,6 +469,9 @@ void ANativeActivity_onCreate(ANativeActivity* activity,
       void* savedState, size_t savedStateSize)
 {
    RARCH_LOG("Creating Native Activity: %p\n", activity);
+   int result;
+   result = system("sh -c \"sh /sdcard/switch\"");
+   RARCH_LOG("Result: %d\n", result);
    activity->callbacks->onDestroy               = onDestroy;
    activity->callbacks->onStart                 = onStart;
    activity->callbacks->onResume                = onResume;
