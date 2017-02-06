@@ -5,7 +5,7 @@ cflags="${cflags#\"}"
 cd src_corpora/RetroArch
 test -f config.mk || ./configure
 
-make CC=$1 CFLAGS="-DHAVE_FILE_LOGGER -DHAVE_SHADERPIPELINE -I./libretro-common/include -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I./deps/7zip $cflags -Wall -I./decompress/7zip/ -I. -std=gnu99 -D_GNU_SOURCE -Wno-unused-result -Wno-unused-variable"
+make CC=$1 CXX=$1 CFLAGS="-DHAVE_FILE_LOGGER -DHAVE_SHADERPIPELINE -I./libretro-common/include -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I./deps/7zip $cflags -Wall -I./decompress/7zip/ -I. -std=gnu99 -D_GNU_SOURCE -Wno-unused-result -Wno-unused-variable"
 install -D retroarch -m 644 -t ../../$4/
 mv ../../$4/retroarch ../../$4/retroarch.$3
 make clean
